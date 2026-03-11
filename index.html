@@ -900,12 +900,92 @@ footer{
   .lstats-g{grid-template-columns:repeat(2,1fr)}
   .lnav-links{display:none}
 }
+@media(max-width:768px){
+  /* NAV */
+  .lnav{padding:0 16px;height:56px}
+  .lnav-logo img{height:22px}
+  .lnav-links{display:none}
+  .lnav-btn{padding:8px 14px;font-size:9px;letter-spacing:.1em}
+
+  /* HERO */
+  .lhero{padding:80px 20px 40px;min-height:auto}
+  .lhero h1{font-size:clamp(36px,10vw,52px);line-height:1.15}
+  .lhero-badge{font-size:8px;padding:8px 14px;letter-spacing:.15em}
+  .lhero-sub{font-size:13px;margin:12px 0 24px}
+  .lhero-acts{flex-direction:column;align-items:stretch;gap:10px;width:100%;max-width:340px;margin:0 auto 0}
+  .lhero-acts .btn-g,.lhero-acts .btn-o{width:100%;text-align:center;justify-content:center}
+  .lscroll{display:none}
+
+  /* UTP BLOCK */
+  .lhero-utp{gap:0;margin-bottom:32px}
+  .lutp-item{padding:0 14px}
+  .lutp-num{font-size:26px}
+  .lutp-txt{font-size:9px}
+  .lutp-div{height:36px}
+
+  /* STATS */
+  .lstats{padding:24px 20px}
+  .lstats-g{grid-template-columns:1fr 1fr;gap:12px}
+  .lstat-n{font-size:28px}
+
+  /* FEATURES */
+  .lfeats-sec{padding:48px 20px}
+  .lfeats-g{grid-template-columns:1fr;gap:12px}
+  .lfeat{padding:20px}
+  .lsec-t{font-size:clamp(24px,7vw,32px)}
+
+  /* HOW IT WORKS */
+  .lhow-sec{padding:48px 20px}
+  .lhow-g{grid-template-columns:1fr;gap:24px}
+
+  /* CTA */
+  .lreg-sec{padding:48px 20px}
+  .lreg-in{padding:28px 20px}
+  .lreg-t{font-size:clamp(24px,8vw,32px)}
+  .lreg-acts{flex-direction:column;align-items:stretch;gap:10px}
+  .lreg-acts .btn-g{width:100%;text-align:center}
+
+  /* FOOTER */
+  .lfoot{padding:28px 20px;flex-direction:column;gap:12px;text-align:center}
+  .lfoot-r{text-align:center}
+
+  /* PLATFORM — sidebar */
+  .ps-sidebar{width:100%;max-width:100%;min-height:auto;flex-direction:row;
+    overflow-x:auto;padding:8px 12px;gap:4px;border-right:none;border-bottom:1px solid var(--border)}
+  .ps-nav{flex-direction:row;gap:4px;width:100%}
+  .ps-nav-btn{padding:8px 12px;font-size:9px;letter-spacing:.06em;white-space:nowrap}
+  .ps-logo{display:none}
+  .ps-layout{flex-direction:column}
+  .ps-main{padding:16px}
+
+  /* PLATFORM — cards */
+  .mcard{padding:16px}
+  .mcard-dirs{flex-wrap:wrap;gap:4px}
+  .slot-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .slot-btn{font-size:9px;padding:6px 4px}
+
+  /* ADMIN matrix */
+  .admin-matrix{overflow-x:auto}
+  .matrix-table{font-size:10px}
+  .matrix-table th,.matrix-table td{padding:6px 8px}
+
+  /* LOGIN */
+  .login-card{width:calc(100% - 32px);max-width:420px;padding:28px 20px}
+}
+
 @media(max-width:640px){
-  .lhero h1{font-size:36px}
-  .lhero-acts{flex-direction:column;align-items:center}
+  .lhero h1{font-size:clamp(32px,9vw,44px)}
+  .lutp-item{padding:0 10px}
+  .lutp-num{font-size:22px}
   .lstats-g{grid-template-columns:1fr}
 }
 
+@media(max-width:480px){
+  .lutp-item{padding:0 8px}
+  .lutp-num{font-size:20px}
+  .lstats-g{grid-template-columns:1fr}
+  .lhero h1{font-size:clamp(30px,9vw,40px)}
+}
 </style>
 </head>
 <body>
@@ -950,7 +1030,9 @@ const STORE_KEY = "ts_meetings_v2";
 function loadMeetings(){
   try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"[]"); }catch(e){ return []; }
 }
-function saveMeetings(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+function saveMeetings(arr){
+  localStorage.setItem(STORE_KEY, JSON.stringify(arr));
+}
 
 let meetings = loadMeetings();
 let mid = meetings.length ? Math.max(...meetings.map(m=>m.id))+1 : 1;
