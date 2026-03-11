@@ -2,6 +2,9 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travel Synergy · Corona Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -996,6 +999,9 @@ footer{
   .ps-layout{flex-direction:column}
   .ps-main{padding:16px}
 
+  /* PROFILE */
+  .prof-grid{grid-template-columns:1fr !important}
+
   /* PLATFORM — cards */
   .mcard{padding:14px 12px;gap:10px;align-items:center}
   .mc-av{width:36px;height:36px;font-size:12px;flex-shrink:0}
@@ -1007,7 +1013,7 @@ footer{
   .mc-btn{padding:7px 12px;font-size:9px;white-space:nowrap}
   .mcard-dirs{flex-wrap:wrap;gap:4px}
   .slot-grid{grid-template-columns:repeat(3,1fr);gap:6px}
-  .slot-btn{font-size:9px;padding:6px 4px}
+  .sl{font-size:11px;padding:8px 4px}
 
   /* ADMIN matrix */
   .admin-matrix{overflow-x:auto}
@@ -1730,7 +1736,7 @@ function renderProfile(){
   const top5 = isSeller ? BUYERS.map(b=>({...b,rate:match(user,b)})).sort((a,b)=>b.rate-a.rate).slice(0,5) : null;
   return `<div>
     <h2 style="font-size:28px;margin-bottom:24px">Профиль</h2>
-    <div style="display:grid;grid-template-columns:${isSeller?"1fr 1fr":"1fr"};gap:28px">
+    <div class="prof-grid" style="display:grid;grid-template-columns:${isSeller?"1fr 1fr":"1fr"};gap:28px">
       <div style="background:rgba(12,14,40,.8);border:1px solid var(--border);padding:28px">
         <div style="display:flex;gap:14px;align-items:center;margin-bottom:22px">
           <div class="ps-avatar" style="width:52px;height:52px;font-size:14px;${isSeller?"background:rgba(48,54,114,.8);border-color:rgba(178,144,106,.3)":""}">${user.logo}</div>
@@ -1750,13 +1756,13 @@ function renderProfile(){
         }).join("")}
       </div>
       ${isSeller && top5 ? `
-      <div>
+      <div style="min-width:0;overflow:hidden">
         <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:400;margin-bottom:14px;letter-spacing:-.01em">Ваш топ байеров</div>
         <div class="mcards">${top5.map(b=>`
           <div class="mcard">
-            <div class="ps-avatar">${b.logo}</div>
-            <div style="flex:1"><div class="mc-name">${b.company}</div><div class="mc-dirs">${b.directions.join(", ")}</div></div>
-            <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:300;color:${matchColor(b.rate)}">${b.rate}%</div>
+            <div class="ps-avatar" style="flex-shrink:0">${b.logo}</div>
+            <div class="mc-body"><div class="mc-name">${b.company}</div><div class="mc-dirs">${b.directions.slice(0,2).join(", ")}</div></div>
+            <div class="mc-right"><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:300;color:${matchColor(b.rate)}">${b.rate}%</div></div>
           </div>`).join("")}
         </div>
       </div>` : ""}
@@ -1920,7 +1926,13 @@ function bindApp(){
 
   // slot selection
   document.querySelectorAll("[data-slot]").forEach(el=>{
-    el.addEventListener("click",()=>{ selectedSlot=el.dataset.slot; render(); });
+    el.addEventListener("click",()=>{
+      selectedSlot = el.dataset.slot;
+      document.querySelectorAll("[data-slot]").forEach(b=>b.classList.remove("sel"));
+      el.classList.add("sel");
+      const cb = document.getElementById("slotConfirmBtn");
+      if(cb) cb.textContent = "ПРЕДЛОЖИТЬ В " + selectedSlot;
+    });
   });
   const scb = document.getElementById("slotConfirmBtn");
   if(scb) scb.addEventListener("click",()=>{
@@ -1948,7 +1960,13 @@ function bindApp(){
 
   // resched slot
   document.querySelectorAll("[data-rslot]").forEach(el=>{
-    el.addEventListener("click",()=>{ selectedSlot=el.dataset.rslot; render(); });
+    el.addEventListener("click",()=>{
+      selectedSlot = el.dataset.rslot;
+      document.querySelectorAll("[data-rslot]").forEach(b=>b.classList.remove("sel"));
+      el.classList.add("sel");
+      const cb = document.getElementById("rslotConfirmBtn");
+      if(cb) cb.textContent = "ПРЕДЛОЖИТЬ " + selectedSlot;
+    });
   });
   const rcb = document.getElementById("rslotConfirmBtn");
   if(rcb) rcb.addEventListener("click",()=>{
