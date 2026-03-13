@@ -1193,7 +1193,7 @@ function renderLanding(){
   <div class="land">
     <!-- NAV -->
     <nav class="lnav">
-      <div class="lnav-logo"><img src="${LOGO_BW}" alt="Corona Travel"></div>
+      <div class="lnav-logo"><img src="${LOGO_BW}" alt="Corona Travel" style="height:32px;display:block;width:auto"></div>
       <ul class="lnav-links">
         <li><a href="#lfeatures">Механика</a></li>
         <li><a href="#lhow">Как работает</a></li>
@@ -1445,9 +1445,12 @@ function renderLogin(){
 
       <label>Пароль</label>
       <div style="position:relative;margin-bottom:18px">
-        <input type="text" style="display:none" aria-hidden="true">
-        <input type="password" style="display:none" aria-hidden="true">
-        <input type="password" id="lpw" placeholder="введите пароль" autocomplete="new-password" name="new-password" style="margin-bottom:0;padding-right:44px">
+        <input type="text" name="fakeusernameremembered" style="display:none">
+        <input type="password" name="fakepasswordremembered" style="display:none">
+        <input type="text" id="lpw" placeholder="введите пароль"
+          autocomplete="off"
+          onfocus="this.type='password'"
+          style="margin-bottom:0;padding-right:44px">
         <button type="button" id="pw-toggle" style="position:absolute;right:0;top:0;bottom:0;width:44px;background:transparent;border:none;border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-d);transition:color .2s" title="Показать пароль">
           <svg id="pw-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -2022,10 +2025,29 @@ function initReveal(){
 
 
 // ═══════════════════════════════════════════
+// DESKTOP ENFORCE — fixes Opera and narrow browsers
+// ═══════════════════════════════════════════
+function enforceDesktop(){
+  if(window.innerWidth <= 600) return;
+  // Force nav links visible
+  document.querySelectorAll('.lnav-links').forEach(el=>{
+    el.style.display='flex';
+    el.style.gap='32px';
+  });
+  // Fix platform layout
+  const side = document.querySelector('.plat-side');
+  const main = document.querySelector('.plat-main');
+  if(side){ side.style.cssText='position:fixed;top:0;bottom:0;left:0;width:195px;z-index:400'; }
+  if(main){ main.style.cssText='margin-left:195px;flex:1;padding:28px;min-height:100vh;max-width:calc(100vw - 195px)'; }
+}
+window.addEventListener('resize', enforceDesktop);
+
+// ═══════════════════════════════════════════
 // BOOT
 // ═══════════════════════════════════════════
 
 render();
+setTimeout(enforceDesktop, 50);
 </script>
 </body>
 </html>
