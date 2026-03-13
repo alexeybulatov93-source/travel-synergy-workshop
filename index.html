@@ -5,7 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 <title>Travel Synergy · Corona Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;700&family=Onest:wght@300;400;500&display=swap" rel="stylesheet">
@@ -918,6 +918,7 @@ footer{
   /* HERO */
   .lhero{padding:80px 20px 40px;min-height:auto}
   .lhero h1{font-size:clamp(36px,10vw,52px);line-height:1.15}
+  .lstats{display:none}
   .lhero-badge{font-size:8px;padding:8px 14px;letter-spacing:.15em}
   .lhero-sub{font-size:13px;margin:12px 0 24px}
   .lhero-acts{flex-direction:column;align-items:stretch;gap:10px;width:100%;max-width:340px;margin:0 auto 0}
@@ -1049,8 +1050,11 @@ footer{
 }
 
 /* Force desktop nav - override any conflicting mobile rules */
+@media(min-width:601px){
+  .lnav-links{display:flex !important;gap:24px;list-style:none}
+}
 @media(min-width:769px){
-  .lnav-links{display:flex !important;gap:32px;list-style:none}
+  .lnav-links{gap:32px !important}
   .plat-main{margin-left:195px !important;max-width:calc(100vw - 195px) !important;padding:28px !important}
   .plat-side{position:fixed !important;width:195px !important;height:100vh !important;top:0 !important;bottom:auto !important;border-top:none !important}
 }
@@ -1441,7 +1445,9 @@ function renderLogin(){
 
       <label>Пароль</label>
       <div style="position:relative;margin-bottom:18px">
-        <input type="password" id="lpw" placeholder="введите пароль" style="margin-bottom:0;padding-right:44px">
+        <input type="text" style="display:none" aria-hidden="true">
+        <input type="password" style="display:none" aria-hidden="true">
+        <input type="password" id="lpw" placeholder="введите пароль" autocomplete="new-password" name="new-password" style="margin-bottom:0;padding-right:44px">
         <button type="button" id="pw-toggle" style="position:absolute;right:0;top:0;bottom:0;width:44px;background:transparent;border:none;border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-d);transition:color .2s" title="Показать пароль">
           <svg id="pw-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
