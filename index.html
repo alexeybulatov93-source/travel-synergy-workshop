@@ -729,7 +729,7 @@ footer{
   border-bottom:1px solid var(--border);z-index:500;
 }
 .lnav-logo img{height:32px;display:block}
-.lnav-links{display:flex;gap:32px;list-style:none}
+.lnav-links{display:flex;gap:32px;list-style:none} /* desktop nav */
 .lnav-links a{
   color:var(--text-m);text-decoration:none;
   font-family:'Onest',sans-serif;font-size:11px;font-weight:400;
@@ -910,10 +910,10 @@ footer{
 }
 @media(max-width:768px){
   /* NAV */
-  .lnav{padding:0 16px;height:56px}
-  .lnav-logo img{height:22px}
+  .lnav{padding:0 20px;height:60px}
+  .lnav-logo img{height:26px}
   .lnav-links{display:none}
-  .lnav-btn{padding:8px 14px;font-size:9px;letter-spacing:.1em}
+  .lnav-btn{padding:9px 16px;font-size:10px;letter-spacing:.12em}
 
   /* HERO */
   .lhero{padding:80px 20px 40px;min-height:auto}
@@ -967,8 +967,17 @@ footer{
   .lreg-acts .btn-g{width:100%;text-align:center}
 
   /* FOOTER */
-  .lfoot{padding:28px 20px;flex-direction:column;gap:12px;text-align:center}
-  .lfoot-r{text-align:center}
+  .lfoot{padding:0;border-top:1px solid var(--border)}
+  .lfoot-in{
+    padding:28px 20px;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:16px;text-align:center;
+  }
+  .lfoot-left{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .lfoot-left img{margin-bottom:8px}
+  .lfoot-tagline,.lfoot-right{text-align:center;font-size:11px}
+  .lfoot-right{color:var(--text-m)}
 
   /* PLATFORM — sidebar */
   .ps-sidebar{width:100%;max-width:100%;min-height:auto;flex-direction:row;
@@ -1028,7 +1037,6 @@ footer{
   .lhero h1{font-size:clamp(32px,9vw,44px)}
   .lutp-item{padding:0 10px}
   .lutp-num{font-size:22px}
-  .lstats-g{grid-template-columns:1fr}
 }
 
 @media(max-width:480px){
@@ -1038,6 +1046,13 @@ footer{
   .stat{min-width:130px;padding:16px 14px}
   .stat-n{font-size:24px}
   .lhero h1{font-size:clamp(30px,9vw,40px)}
+}
+
+/* Force desktop nav - override any conflicting mobile rules */
+@media(min-width:769px){
+  .lnav-links{display:flex !important;gap:32px;list-style:none}
+  .plat-main{margin-left:195px !important;max-width:calc(100vw - 195px) !important;padding:28px !important}
+  .plat-side{position:fixed !important;width:195px !important;height:100vh !important;top:0 !important;bottom:auto !important;border-top:none !important}
 }
 </style>
 </head>
@@ -1931,7 +1946,7 @@ function bindApp(){
       document.querySelectorAll("[data-slot]").forEach(b=>b.classList.remove("sel"));
       el.classList.add("sel");
       const cb = document.getElementById("slotConfirmBtn");
-      if(cb) cb.textContent = "ПРЕДЛОЖИТЬ В " + selectedSlot;
+      if(cb){ cb.textContent = "ПРЕДЛОЖИТЬ В " + selectedSlot; cb.disabled = false; cb.style.opacity="1"; }
     });
   });
   const scb = document.getElementById("slotConfirmBtn");
@@ -1965,7 +1980,7 @@ function bindApp(){
       document.querySelectorAll("[data-rslot]").forEach(b=>b.classList.remove("sel"));
       el.classList.add("sel");
       const cb = document.getElementById("rslotConfirmBtn");
-      if(cb) cb.textContent = "ПРЕДЛОЖИТЬ " + selectedSlot;
+      if(cb){ cb.textContent = "ПРЕДЛОЖИТЬ " + selectedSlot; cb.disabled = false; cb.style.opacity="1"; }
     });
   });
   const rcb = document.getElementById("rslotConfirmBtn");
